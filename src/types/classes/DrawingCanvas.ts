@@ -21,8 +21,10 @@ class DrawingCanvas {
 
         this.ctx.setLineDash([5, 15]);
         this.ctx.strokeStyle = "rgba(0, 0, 0, 0.7)";
-        const { initialX, initialY, x, y } = this.state
+        const { initialX, initialY, x, y } = this.state;
         this.ctx.strokeRect(initialX, initialY, x, y);
+
+        this.ctx.restore;
     }
 
     constructor(ctx: CanvasRenderingContext2D, setup: () => void = () => { }) {

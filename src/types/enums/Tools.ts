@@ -5,3 +5,5 @@ enum Tools {
     triangle = "triangle",
     eyedropper = "eyedropper"
 }
+
+export default Tools;

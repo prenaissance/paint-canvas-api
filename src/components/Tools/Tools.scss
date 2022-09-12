@@ -4,9 +4,16 @@
     height: 100%;
     width: 100%;
     border: 1px solid black;
+    display: flex;
+    gap: 3px;
+    align-items: flex-start;
 
     &__button {
         height: 30px;
         width: 30px;
+
+        &--enabled {
+            border: 3px solid green;
+        }
     }
 }

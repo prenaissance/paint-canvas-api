@@ -1,0 +1,17 @@
+.history {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    grid-area: 3/2;
+    margin-top: 5px;
+
+    &__button {
+        height: 30px;
+        aspect-ratio: 1/1;
+
+        &--long {
+            aspect-ratio: 2/1;
+        }
+    }
+}

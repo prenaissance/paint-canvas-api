@@ -1,12 +1,11 @@
 import "./extensions";
 import "./style.scss";
-import { triangle } from "./paths";
 import Tools from "./components/Tools/Tools";
 import DrawingCanvas from "./types/classes/DrawingCanvas";
+import History from "./components/History/History";
+import ColorPicker from "./components/ColorPicker/ColorPicker";
 
 const container = document.querySelector(".grid-container")!;
-container.appendChild(Tools());
-
 const canvas: HTMLCanvasElement = document.querySelector("#canvas")!;
 const ctx = canvas.getContext("2d", { alpha: true })!;
 
@@ -18,3 +17,5 @@ const drawingCanvas = new DrawingCanvas(ctx, () => {
     ctx.fillRect(25, 25, 50, 50);
 });
 
+//mutate DOM after canvas creation, some events depend on the context being initialized.
+container.append(Tools(), History(), ColorPicker());

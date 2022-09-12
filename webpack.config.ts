@@ -22,7 +22,10 @@ const config: webpack.Configuration = {
             },
             {
                 test: /\.(png|jpg|jpeg|gif)$/,
-                type: "asset/resource"
+                type: "asset/resource",
+                generator: {
+                    filename: "assets/images/[name].[hash][ext][query]"
+                }
             },
             {
                 test: /\.svg$/,

@@ -1,7 +1,7 @@
-import "../../extensions";
-import IToolHandler from "../interfaces/IToolHandler";
-import DrawingCanvasContext from "./DrawingCanvasContext";
-import { triangle } from "../../helpers/paths";
+import "../../../extensions";
+import IToolHandler from "../../interfaces/IToolHandler";
+import DrawingCanvasContext from "../DrawingCanvasContext";
+import { triangle } from "../../../helpers/paths";
 
 class TriangleHandler implements IToolHandler {
     private readonly _state = new DrawingCanvasContext();

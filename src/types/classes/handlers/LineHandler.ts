@@ -1,31 +1,33 @@
-import IToolHandler from "../interfaces/IToolHandler";
-import DrawingCanvasContext from "./DrawingCanvasContext";
+import IToolHandler from "../../interfaces/IToolHandler";
+import DrawingCanvasContext from "../DrawingCanvasContext";
 
-class TriangleHandler implements IToolHandler {
+class LineHandler implements IToolHandler {
     private readonly _state = new DrawingCanvasContext();
-    private drawSquare() {
+    private drawLine() {
         const ctx = this._state.drawingCanvas.ctx;
         const { x, y, initialX, initialY, strokeColor, fillColor } = this._state;
         ctx.save();
 
         ctx.strokeStyle = strokeColor;
         ctx.fillStyle = fillColor;
-        ctx.strokeRect(initialX, initialY, x - initialX, y - initialY);
-        ctx.fillRect(initialX, initialY, x - initialX, y - initialY);
+        ctx.beginPath();
+        ctx.moveTo(initialX, initialY);
+        ctx.lineTo(x, y);
+        ctx.stroke();
 
         ctx.restore();
     }
 
     handleDisplay() {
         this._state.drawingCanvas.resetFrame();
-        this.drawSquare();
+        this.drawLine();
     }
 
     handleDraw() {
         this._state.drawingCanvas.resetFrame();
-        this.drawSquare();
+        this.drawLine();
         this._state.drawingCanvas.drawFrame();
     }
 }
 
-export default TriangleHandler;
+export default LineHandler;

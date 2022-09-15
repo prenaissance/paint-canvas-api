@@ -1,7 +1,7 @@
-import ColorChangeEvent, { ColorTypeEnum } from "../events/ColorChangeEvent";
-import IObservable from "../interfaces/IObservable";
+import ColorChangeEvent from "../events/ColorChangeEvent";
+import IObserver from "../interfaces/IObserver";
 
-class ColorPickerObserver implements IObservable<null> {
+class ColorPickerObserver implements IObserver<null> {
     private readonly _subscribers: HTMLElement[] = [];
 
     subscribe(element: HTMLElement) {

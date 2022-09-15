@@ -1,25 +1,33 @@
 import ToolsEvent, { ToolsEnum } from "../events/ToolsEvent";
-import IObservable from "../interfaces/IObservable";
+import IObserver from "../interfaces/IObserver";
 import HistoryEvent, { HistoryEnum } from "../events/HistoryEvent";
 import DrawingCanvasContext from "./DrawingCanvasContext";
 import IToolHandler from "../interfaces/IToolHandler";
-class DrawingCanvas implements IObservable<"history" | "tool"> {
+import SizedStack from "./SizedStack";
+class DrawingCanvas implements IObserver<"history" | "tool"> {
+    private readonly _id: number;
     readonly ctx: CanvasRenderingContext2D;
     currentFrame: string;
     state: DrawingCanvasContext;
 
-    private readonly _undoHistory: string[] = [];
-    private readonly _redoHistory: string[] = [];
+    private _undoHistory: SizedStack<string> = new SizedStack<string>(20);
+    private _redoHistory: string[] = [];
 
     private readonly _historySubscribers: HTMLElement[] = [];
     private readonly _toolSubscribers: HTMLElement[] = [];
+    private readonly _storage: Storage = localStorage;
 
-    constructor(ctx: CanvasRenderingContext2D, setup: () => void = () => { }) {
+    constructor(ctx: CanvasRenderingContext2D, id: number, setup: () => void = () => { }) {
+        this._id = id;
         this.ctx = ctx;
         const canvas = ctx.canvas;
-        setup();
-        this.currentFrame = ctx.canvas.toDataURL("image/png");
         this.state = new DrawingCanvasContext(this);
+        if (!this.fromLocalStorage()) {
+            setup();
+            this.currentFrame = ctx.canvas.toDataURL("image/png");
+        }
+
+        console.log(this.currentFrame);
 
         canvas.addEventListener("pointermove", (e) => {
             this.state.x = e.offsetX;
@@ -31,12 +39,12 @@ class DrawingCanvas implements IObservable<"history" | "tool"> {
             this.state.initialX = e.offsetX;
             this.state.initialY = e.offsetY;
             this.state.pressed = true;
-        })
+        });
 
         canvas.addEventListener("pointerup", () => {
             this.state.pressed = false;
             this.state.tool.handleDraw();
-        })
+        });
     }
 
     subscribe(element: HTMLElement, type: "history" | "tool") {
@@ -68,12 +76,7 @@ class DrawingCanvas implements IObservable<"history" | "tool"> {
     }
 
     reset() {
-        this.ctx.save();
-
-        this.ctx.fillStyle = "#fff";
-        this.ctx.fillRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
-
-        this.ctx.restore();
+        this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
     }
 
     clear() {
@@ -87,7 +90,7 @@ class DrawingCanvas implements IObservable<"history" | "tool"> {
 
         const snapshot = new Image();
         snapshot.src = this.currentFrame;
-        this.ctx.drawImage(snapshot, 0, 0);
+        this.ctx.drawImage(snapshot, 0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
     }
 
     drawFrame() {
@@ -97,6 +100,7 @@ class DrawingCanvas implements IObservable<"history" | "tool"> {
 
         this.dispatchHistory(HistoryEnum.undo, this._undoHistory.length);
         this.dispatchHistory(HistoryEnum.redo, this._redoHistory.length);
+        this.toLocalStorage();
     }
 
     undo() {
@@ -107,6 +111,7 @@ class DrawingCanvas implements IObservable<"history" | "tool"> {
         this.currentFrame = this._undoHistory.pop()!;
         this.resetFrame();
         this.dispatchHistory(HistoryEnum.undo, this._undoHistory.length);
+        this.toLocalStorage();
     }
 
     redo() {
@@ -117,6 +122,7 @@ class DrawingCanvas implements IObservable<"history" | "tool"> {
         this.currentFrame = this._redoHistory.pop()!;
         this.resetFrame();
         this.dispatchHistory(HistoryEnum.redo, this._redoHistory.length);
+        this.toLocalStorage();
     }
 
     public drawOutline() {
@@ -129,6 +135,27 @@ class DrawingCanvas implements IObservable<"history" | "tool"> {
         this.ctx.setLineDash([]);
 
         this.ctx.restore;
+    }
+
+    private toLocalStorage() {
+        if (this._undoHistory.length === 0) {
+            return;
+        }
+        const history = JSON.stringify([...this._undoHistory, this.currentFrame]);
+        this._storage.setItem(`drawingCanvas:${this._id}`, history);
+    }
+
+    private fromLocalStorage() {
+        const historyString = this._storage.getItem(`drawingCanvas:${this._id}`);
+        if (!historyString) {
+            return false;
+        }
+
+        this._undoHistory = SizedStack.fromIterable<string>(JSON.parse(historyString));
+        this.currentFrame = this._undoHistory.pop()!;
+        this.resetFrame();
+
+        return true;
     }
 }
 

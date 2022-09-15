@@ -8,12 +8,12 @@ import ellipse from "assets/images/ellipse.png";
 import ToolButton from "./ToolButton";
 import { getDrawingCanvas } from "../../helpers/misc";
 import ToolsEvent, { ToolsEnum } from "../../types/events/ToolsEvent";
-import PencilHandler from "../../types/classes/PencilHandler";
+import PencilHandler from "../../types/classes/handlers/PencilHandler";
 import IToolHandler from "../../types/interfaces/IToolHandler";
-import TriangleHandler from "../../types/classes/TriangleHandler";
-import SquareHandler from "../../types/classes/SquareHandler";
-import EllipseHandler from "../../types/classes/EllipseHandler";
-import LineHandler from "../../types/classes/LineHandler";
+import TriangleHandler from "../../types/classes/handlers/TriangleHandler";
+import SquareHandler from "../../types/classes/handlers/SquareHandler";
+import EllipseHandler from "../../types/classes/handlers/EllipseHandler";
+import LineHandler from "../../types/classes/handlers/LineHandler";
 
 const handleEnabled = (tool: ToolsEnum, handler: IToolHandler) => (e: MouseEvent) => {
     const button = e.currentTarget as HTMLButtonElement;

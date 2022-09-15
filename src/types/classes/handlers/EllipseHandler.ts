@@ -1,5 +1,5 @@
-import IToolHandler from "../interfaces/IToolHandler";
-import DrawingCanvasContext from "./DrawingCanvasContext";
+import IToolHandler from "../../interfaces/IToolHandler";
+import DrawingCanvasContext from "../DrawingCanvasContext";
 
 class EllipseHandler implements IToolHandler {
     private readonly _state = new DrawingCanvasContext();

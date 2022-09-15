@@ -1,7 +1,6 @@
 import IHandler from "../interfaces/IToolHandler";
 import DrawingCanvas from "./DrawingCanvas";
-import PencilHandler from "./PencilHandler";
-import TriangleHandler from "./TriangleHandler";
+import PencilHandler from "./handlers/PencilHandler";
 
 class DrawingCanvasContext {// this should be a global state
     private static _instance: DrawingCanvasContext | null = null;

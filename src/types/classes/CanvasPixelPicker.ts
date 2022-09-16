@@ -1,5 +1,6 @@
 import Rgba from "../models/Rgba";
 import DrawingCanvasContext from "./DrawingCanvasContext";
+import RgbaFactory from "./RgbaFactory";
 
 // should be a singleton that listens to render events to update imageData
 class CanvasPixelPicker {
@@ -25,7 +26,7 @@ class CanvasPixelPicker {
             clampedIndex + 4
         );
 
-        return { r, g, b, a: a / 255 };
+        return RgbaFactory.getRgba(r, g, b, a / 255);
     }
 
     setAt(x: number, y: number, rgba: Rgba) {
@@ -39,4 +40,3 @@ class CanvasPixelPicker {
 }
 
 export default CanvasPixelPicker;
-export { Rgba };

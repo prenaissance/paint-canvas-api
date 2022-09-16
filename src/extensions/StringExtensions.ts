@@ -1,3 +1,4 @@
+import RgbaFactory from "../types/classes/RgbaFactory";
 import Rgba from "../types/models/Rgba";
 
 declare global {
@@ -14,12 +15,12 @@ const regexHandlerArray = [
         regex: /^#(\d|[a-f]){3}$/i,// #987
         handler: (str: string) => {
             const [, rChar, gChar, bChar] = str;
-            const rgba: Rgba = {
-                r: Number.parseInt(rChar, 16) * 17,
-                g: Number.parseInt(gChar, 16) * 17,
-                b: Number.parseInt(bChar, 16) * 17,
-                a: 1
-            }
+            const rgba = RgbaFactory.getRgba(
+                Number.parseInt(rChar, 16) * 17,
+                Number.parseInt(gChar, 16) * 17,
+                Number.parseInt(bChar, 16) * 17,
+                1
+            );
 
             return rgba;
         }
@@ -30,12 +31,12 @@ const regexHandlerArray = [
             const rStr = str.slice(1, 3);
             const gStr = str.slice(3, 5);
             const bStr = str.slice(5, 6);
-            const rgba: Rgba = {
-                r: Number.parseInt(rStr, 16),
-                g: Number.parseInt(gStr, 16),
-                b: Number.parseInt(bStr, 16),
-                a: 1
-            }
+            const rgba = RgbaFactory.getRgba(
+                Number.parseInt(rStr, 16),
+                Number.parseInt(gStr, 16),
+                Number.parseInt(bStr, 16),
+                1
+            );
 
             return rgba;
         }
@@ -48,12 +49,7 @@ const regexHandlerArray = [
                 .split(",")
                 .map(x => x.trim());
             const [r, g, b] = filteredNumbers.map(x => Number.parseInt(x));
-            const rgba: Rgba = {
-                r,
-                g,
-                b,
-                a: 1
-            }
+            const rgba = RgbaFactory.getRgba(r, g, b, 1);
 
             return rgba;
         }
@@ -69,12 +65,7 @@ const regexHandlerArray = [
                 .slice(0, 3)
                 .map(x => Number.parseInt(x));
             const a = Number.parseFloat(filteredNumbers[3]);
-            const rgba: Rgba = {
-                r,
-                g,
-                b,
-                a
-            }
+            const rgba = RgbaFactory.getRgba(r, g, b, a);
 
             return rgba;
         }

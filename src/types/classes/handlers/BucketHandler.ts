@@ -30,9 +30,11 @@ class BucketHandler implements IToolHandler {
     private fill() {
         const pixelPicker = new CanvasPixelPicker();
         const queue = new Queue<Coords>();
+        const checkedPixels = new Set<string>();
+        checkedPixels.add(`${this._state.x}:${this._state.y}`);
         const rgba = pixelPicker.at(this._state.x, this._state.y);
         const fillRgba = this._state.fillColor.toRgba();
-        if (!rgba || !fillRgba || shallowEquals(rgba, fillRgba)) {// click released outside the canvas
+        if (!rgba || !fillRgba || rgba === fillRgba) {// click released outside the canvas
             return;
         }
 
@@ -45,10 +47,12 @@ class BucketHandler implements IToolHandler {
             const neighbors: Coords[] = neighborCoordOffsets
                 .map(({ x, y }) => ({ x: current.x + x, y: current.y + y }));
             neighbors.filter(({ x, y }) =>
+                !checkedPixels.has(`${x}:${y}`) &&
                 pixelPicker.at(x, y) &&
-                shallowEquals(pixelPicker.at(x, y)!, rgba)
+                pixelPicker.at(x, y)! === rgba
             ).forEach(({ x, y }) => {
-                pixelPicker.setAt(current.x, current.y, fillRgba);
+                pixelPicker.setAt(x, y, fillRgba);
+                checkedPixels.add(`${x}:${y}`);
                 queue.push({ x, y });
             });
 

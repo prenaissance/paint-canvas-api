@@ -34,12 +34,14 @@ class DrawingCanvas implements IObserver<"history" | "tool"> {
         });
 
         canvas.addEventListener("pointerdown", (e) => {
+            canvas.setPointerCapture(e.pointerId);
             this.state.initialX = e.offsetX;
             this.state.initialY = e.offsetY;
             this.state.pressed = true;
         });
 
-        canvas.addEventListener("pointerup", () => {
+        canvas.addEventListener("pointerup", (e) => {
+            canvas.releasePointerCapture(e.pointerId);
             this.state.pressed = false;
             this.state.tool.handleDraw();
         });

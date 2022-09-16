@@ -1,6 +1,6 @@
 {
   "name": "canvas-paint",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "canvas api paint",
   "main": "index.js",
   "scripts": {

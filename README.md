@@ -23,12 +23,12 @@ I tried every single way of debugging this, some frames simply refuse to draw fo
 - Local storage loading
 - Download button
 - Bucket tool (works with BFS)
-- Eyedropper tool
+- Eyedropper tool (no visual feedback yet, fill only)
 
 ## TODO
 
 - Add layers functionality (hard)
-- Add line width slider (easy-medium)
+- Add line width slider (easy-medium) 
 - Bezier curves (medium)
 
 ## Known issues
@@ -37,6 +37,12 @@ I tried every single way of debugging this, some frames simply refuse to draw fo
 - Local storage loading does not work before a browser refresh
 
 ## Changelog
+
+## [1.2.2] - 2022-09-16
+
+### Fixed
+
+- using pointer capture, now tools can be held outside canvas boundaries
 
 ## [1.2.1] - 2022-09-16
 

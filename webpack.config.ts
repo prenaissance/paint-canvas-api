@@ -51,7 +51,7 @@ const config: webpack.Configuration = {
         clean: true
     },
     resolve: {
-        extensions: [".ts", ".js", ".json", ".scss", ".gif", ".png", ".jpg", ".jpeg", ".svg"],
+        extensions: [".ts", ".js", ".json"],
         alias: {
             assets: path.join(__dirname, "src", "assets")
         }

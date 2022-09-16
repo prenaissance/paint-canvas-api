@@ -27,8 +27,6 @@ class DrawingCanvas implements IObserver<"history" | "tool"> {
             this.currentFrame = ctx.canvas.toDataURL("image/png");
         }
 
-        console.log(this.currentFrame);
-
         canvas.addEventListener("pointermove", (e) => {
             this.state.x = e.offsetX;
             this.state.y = e.offsetY;

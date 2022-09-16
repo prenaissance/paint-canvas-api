@@ -1,7 +1,7 @@
 import IToolHandler from "../../interfaces/IToolHandler";
 import DrawingCanvasContext from "../DrawingCanvasContext";
 
-class TriangleHandler implements IToolHandler {
+class SquareHandler implements IToolHandler {
     private readonly _state = new DrawingCanvasContext();
     private drawSquare() {
         const ctx = this._state.drawingCanvas.ctx;
@@ -28,4 +28,4 @@ class TriangleHandler implements IToolHandler {
     }
 }
 
-export default TriangleHandler;
+export default SquareHandler;

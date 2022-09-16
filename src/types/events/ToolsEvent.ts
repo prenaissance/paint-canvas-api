@@ -7,7 +7,8 @@ enum ToolsEnum {
     square = "square",
     ellipse = "ellipse",
     triangle = "triangle",
-    eyedropper = "eyedropper"
+    eyedropper = "eyedropper",
+    bucket = "bucket"
 }
 
 type ToolsActionData = {

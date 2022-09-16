@@ -1,4 +1,4 @@
-import "../../../extensions";
+import "../../../extensions/Path2DExtensions";
 import IToolHandler from "../../interfaces/IToolHandler";
 import DrawingCanvasContext from "../DrawingCanvasContext";
 import { triangle } from "../../../helpers/paths";

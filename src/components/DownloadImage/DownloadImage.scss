@@ -1,3 +1,8 @@
 .download-image {
     grid-area: 3 / 3;
+    margin-top: 3px;
+
+    >button {
+        height: 30px;
+    }
 }

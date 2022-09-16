@@ -1,6 +1,7 @@
 import DLinkedList from "./DLinkedList";
 
 // 100% is less efficient than an array because of GC
+// should have been implemented with simple linked list, but I'm too lazy to refactor
 class SizedStack<T> implements Iterable<T> {
     private _start: DLinkedList<T> | null;
     private _end: DLinkedList<T> | null;
@@ -47,7 +48,20 @@ class SizedStack<T> implements Iterable<T> {
         const returnValue = this._end!.value;
         this._end = this._end!.previous;
         this._end!.next = null;
+        this._length--;
+
         return returnValue;
+    }
+
+    peek() {
+        if (!this._length) {
+            return null;
+        }
+        return this._end!.value;
+    }
+
+    empty() {
+        return this._length === 0;
     }
 
     *[Symbol.iterator](): Iterator<T, any, undefined> {

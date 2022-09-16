@@ -4,6 +4,8 @@ import line from "assets/images/line.png";
 import triangle from "assets/images/triangle.jpg";
 import square from "assets/svg/square.svg";
 import ellipse from "assets/images/ellipse.png";
+import bucket from "assets/images/colored_bucket.png";
+import eyedropperSvg from "assets/svg/eyedropper.svg";
 
 import ToolButton from "./ToolButton";
 import { getDrawingCanvas } from "../../helpers/misc";
@@ -14,6 +16,8 @@ import TriangleHandler from "../../types/classes/handlers/TriangleHandler";
 import SquareHandler from "../../types/classes/handlers/SquareHandler";
 import EllipseHandler from "../../types/classes/handlers/EllipseHandler";
 import LineHandler from "../../types/classes/handlers/LineHandler";
+import BucketHandler from "../../types/classes/handlers/BucketHandler";
+import EyedropperHandler from "../../types/classes/handlers/EyedropperHandler";
 
 const handleEnabled = (tool: ToolsEnum, handler: IToolHandler) => (e: MouseEvent) => {
     const button = e.currentTarget as HTMLButtonElement;
@@ -71,6 +75,22 @@ const EllipseButton = () => (
     })
 );
 
+const BucketButton = () => (
+    ToolButton({
+        icon: bucket,
+        onClick: handleEnabled(ToolsEnum.bucket, new BucketHandler()),
+        onTool: handleDisabledStyle(ToolsEnum.bucket)
+    })
+);
+
+const EyedropperButton = () => (
+    ToolButton({
+        icon: eyedropperSvg,
+        onClick: handleEnabled(ToolsEnum.eyedropper, new EyedropperHandler()),
+        onTool: handleDisabledStyle(ToolsEnum.eyedropper)
+    })
+);
+
 const Tools = () => {
     const tools = document.createElement("div");
     tools.className = "tools";
@@ -80,7 +100,9 @@ const Tools = () => {
         LineButton(),
         SquareButton(),
         TriangleButton(),
-        EllipseButton()
+        EllipseButton(),
+        BucketButton(),
+        EyedropperButton()
     );
     return tools;
 };
